@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Enhanced Hero Section with Animations -->
+<section id="home" class="hero-section text-white py-5" style="background-color: #000000;">
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 2.5s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 4.5s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 1.5s;"></div>
+    </div>
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6 hero-content">
+                <h1 class="display-4 fw-bold mb-4 slide-in-left">
+                    <span class="text-gradient hero-tedx-text">TEDx</span> 
+                    <span class="hero-nmims-text">NMIMS Indore</span>
+                </h1>
+                <h2 class="h3 mb-4 fade-in fade-in-delay-1 hero-subtitle">Ideas Worth Spreading</h2>
+                <p class="lead mb-4 fade-in fade-in-delay-2 hero-description">
+                    Join us for inspiring talks that challenge perspectives, spark innovation, 
+                    and create meaningful change in our community.
+                </p>
+                <div class="d-flex gap-3 fade-in fade-in-delay-3">
+                    <a href="#events" class="btn btn-danger btn-lg interactive-hover pulse-btn">
+                        <i class="fas fa-calendar-alt me-2"></i>View Events
+                    </a>
+                    <a href="#about" class="btn btn-outline-light btn-lg interactive-hover slide-btn">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center slide-in-right">
+                <div class="hero-image-placeholder p-5">
+                    <i class="fas fa-lightbulb fa-5x text-warning mb-3 scale-in"></i>
+                    <h4 class="fade-in fade-in-delay-2">Innovation & Ideas</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Enhanced Featured Events Section -->
+<section id="events" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 fade-in text-gradient">Featured Events</h2>
+        <div class="row stagger-animation">
+            {% for event in featured_events %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow hover-lift">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <span class="badge bg-danger">Featured</span>
+                            <small class="text-muted">
+                                <i class="fas fa-calendar-alt me-1"></i>
+                                {{ event.date.strftime('%B %d, %Y') }}
+                            </small>
+                        </div>
+                        <h5 class="card-title">{{ event.title }}</h5>
+                        <p class="card-text text-muted">{{ event.description[:120] }}...</p>
+                        <p class="small">
+                            <i class="fas fa-user me-1 text-danger"></i>
+                            <strong>Speaker:</strong> {{ event.speaker if event.speaker else 'TBA' }}
+                        </p>
+                        <p class="small">
+                            <i class="fas fa-map-marker-alt me-1 text-danger"></i>
+                            {{ event.location }}
+                        </p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <a href="{{ url_for('event_detail', event_id=event.id) }}" class="btn btn-outline-danger interactive-hover">
+                            Learn More <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-5" style="background-color: #111111;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="fade-in text-gradient">About TEDx NMIMS Indore</h2>
+                <p class="lead text-light fade-in fade-in-delay-1">
+                    Ideas worth spreading in the heart of Indore
+                </p>
+            </div>
+        </div>
+        <div class="row stagger-animation">
+            <div class="col-lg-6 mb-4">
+                <h3 class="h4 mb-3 text-gradient">Our Mission</h3>
+                <p class="text-light">
+                    TEDx NMIMS Indore is an independently organized TED event that brings together bright minds 
+                    to give talks that are idea-focused, and on a wide range of subjects, to foster learning, 
+                    inspiration and wonder – and provoke conversations that matter.
+                </p>
+                <p class="text-light">
+                    We believe in the power of ideas to change attitudes, lives and, ultimately, the world. 
+                    Our platform provides a space for thinkers, innovators, and change-makers to share their 
+                    insights and inspire our community.
+                </p>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="bg-glass rounded p-4 h-100 d-flex align-items-center justify-content-center hover-lift" style="border: 2px solid var(--tedx-red);">
+                    <div class="text-center">
+                        <i class="fas fa-lightbulb fa-4x text-danger mb-3 scale-in"></i>
+                        <h4 class="text-white">Inspiring Innovation</h4>
+                        <p class="text-light">Through powerful ideas and meaningful conversations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Speaker Spotlight Section -->
+<section class="py-5 bg-danger">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="fade-in text-white">Past Speaker Highlights</h2>
+                <p class="lead text-white fade-in fade-in-delay-1">
+                    Visionaries who have graced our stage
+                </p>
+            </div>
+        </div>
+        <div class="row stagger-animation">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card bg-glass border-light hover-lift">
+                    <div class="card-body text-center">
+                        <div class="speaker-avatar rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 100px; height: 100px; background: white;">
+                            <i class="fas fa-user fa-2x text-danger"></i>
+                        </div>
+                        <h5 class="card-title text-white">Dr. Innovation Leader</h5>
+                        <p class="text-light small">Technology Entrepreneur</p>
+                        <p class="card-text text-light">"The future belongs to those who dare to dream differently and act boldly."</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card bg-glass border-light hover-lift">
+                    <div class="card-body text-center">
+                        <div class="speaker-avatar rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 100px; height: 100px; background: white;">
+                            <i class="fas fa-user fa-2x text-danger"></i>
+                        </div>
+                        <h5 class="card-title text-white">Prof. Creative Mind</h5>
+                        <p class="text-light small">Design Thinking Expert</p>
+                        <p class="card-text text-light">"Creativity is intelligence having fun and solving real problems."</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card bg-glass border-light hover-lift">
+                    <div class="card-body text-center">
+                        <div class="speaker-avatar rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 100px; height: 100px; background: white;">
+                            <i class="fas fa-user fa-2x text-danger"></i>
+                        </div>
+                        <h5 class="card-title text-white">Ms. Change Maker</h5>
+                        <p class="text-light small">Social Impact Leader</p>
+                        <p class="card-text text-light">"Small actions, when multiplied by millions, transform the world."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="py-5" style="background-color: #0a0a0a;">
+    <div class="container">
+        <div class="row text-center stagger-animation">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="hover-lift">
+                    <h3 class="display-4 text-danger fw-bold">15+</h3>
+                    <h5 class="text-white">Events Organized</h5>
+                    <p class="text-light">Successful TEDx events that inspired thousands</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="hover-lift">
+                    <h3 class="display-4 text-danger fw-bold">50+</h3>
+                    <h5 class="text-white">Speakers Featured</h5>
+                    <p class="text-light">Thought leaders from diverse backgrounds</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="hover-lift">
+                    <h3 class="display-4 text-danger fw-bold">5000+</h3>
+                    <h5 class="text-white">Lives Touched</h5>
+                    <p class="text-light">Individuals inspired by powerful ideas</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="hover-lift">
+                    <h3 class="display-4 text-danger fw-bold">100%</h3>
+                    <h5 class="text-white">Passion Driven</h5>
+                    <p class="text-light">Committed to spreading ideas worth sharing</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- What is TEDx Section -->
+<section class="py-5" style="background-color: #1a1a1a;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 fade-in">
+                <h2 class="text-gradient mb-4">What is TEDx?</h2>
+                <p class="text-light mb-4">
+                    In the spirit of ideas worth spreading, TEDx is a program of local, 
+                    self-organized events that bring people together to share a TED-like experience.
+                </p>
+                <p class="text-light mb-4">
+                    At a TEDx event, TED Talks video and live speakers combine to spark deep 
+                    discussion and connection in a small group. These local, self-organized 
+                    events are branded TEDx, where x = independently organized TED event.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="#events" class="btn btn-danger interactive-hover">
+                        <i class="fas fa-calendar-alt me-2"></i>Upcoming Events
+                    </a>
+                    <a href="#contact" class="btn btn-outline-light interactive-hover">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 fade-in fade-in-delay-1">
+                <div class="bg-glass rounded p-5 text-center" style="border: 2px solid var(--tedx-red);">
+                    <i class="fas fa-quote-left fa-3x text-danger mb-4"></i>
+                    <blockquote class="blockquote">
+                        <p class="text-white fs-5">"Ideas are the currency of the 21st century"</p>
+                        <footer class="blockquote-footer text-light mt-3">
+                            <cite title="Source Title">TED Philosophy</cite>
+                        </footer>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Community Impact Section -->
+<section class="py-5 bg-danger">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="fade-in text-white">Community Impact</h2>
+                <p class="lead text-white fade-in fade-in-delay-1">
+                    How we're making a difference in Indore and beyond
+                </p>
+            </div>
+        </div>
+        <div class="row stagger-animation">
+            <div class="col-lg-4 mb-4">
+                <div class="text-center hover-lift">
+                    <i class="fas fa-graduation-cap fa-4x text-white mb-3"></i>
+                    <h4 class="text-white">Education</h4>
+                    <p class="text-white">
+                        Partnering with educational institutions to bring innovative learning 
+                        experiences and inspire the next generation of leaders.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="text-center hover-lift">
+                    <i class="fas fa-rocket fa-4x text-white mb-3"></i>
+                    <h4 class="text-white">Innovation</h4>
+                    <p class="text-white">
+                        Supporting startups and entrepreneurs by providing a platform to share 
+                        breakthrough ideas and connect with like-minded innovators.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="text-center hover-lift">
+                    <i class="fas fa-heart fa-4x text-white mb-3"></i>
+                    <h4 class="text-white">Social Change</h4>
+                    <p class="text-white">
+                        Amplifying voices of change-makers who are addressing social challenges 
+                        and creating positive impact in our communities.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-5" style="background-color: #0a0a0a;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="text-gradient mb-4 fade-in">Stay Connected</h2>
+                <p class="text-light mb-4 fade-in fade-in-delay-1">
+                    Subscribe to our newsletter and be the first to know about upcoming events, 
+                    speaker announcements, and exclusive content.
+                </p>
+                <div class="row justify-content-center fade-in fade-in-delay-2">
+                    <div class="col-md-8">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control form-control-lg" placeholder="Enter your email address" style="background: rgba(255,255,255,0.1); border: 2px solid var(--tedx-red); color: white;">
+                            <button class="btn btn-danger btn-lg px-4" type="button">
+                                <i class="fas fa-paper-plane me-2"></i>Subscribe
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Enhanced Call to Action Section -->
+<section id="contact" class="py-5 text-white position-relative bg-danger">
+    <div class="container text-center">
+        <h2 class="mb-4 fade-in">Ready to Join the Conversation?</h2>
+        <p class="lead mb-4 fade-in fade-in-delay-1">
+            Be part of a community that values innovation, creativity, and meaningful dialogue.
+        </p>
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-8">
+                <p class="fade-in fade-in-delay-2">
+                    Whether you're interested in speaking, volunteering, sponsoring, or simply attending our events, 
+                    we welcome you to be part of the TEDx NMIMS Indore family. Together, we can spread ideas 
+                    that have the power to transform our world.
+                </p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center gap-3 stagger-animation flex-wrap">
+            <a href="{{ url_for('contact') }}" class="btn btn-light btn-lg interactive-hover">
+                <i class="fas fa-envelope me-2"></i>Get in Touch
+            </a>
+            <a href="{{ url_for('events') }}" class="btn btn-outline-light btn-lg interactive-hover">
+                <i class="fas fa-ticket-alt me-2"></i>Register for Events
+            </a>
+            <a href="#about" class="btn btn-outline-light btn-lg interactive-hover">
+                <i class="fas fa-info-circle me-2"></i>Learn More
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

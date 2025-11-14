@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Events - TEDx NMIMS Indore{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 class="mb-4 fade-in text-gradient">Upcoming Events</h1>
+            <p class="lead text-muted mb-5 fade-in fade-in-delay-1">
+                Discover inspiring talks and engaging experiences that will broaden your perspective.
+            </p>
+        </div>
+    </div>
+    
+    {% if events.items %}
+    <div class="row stagger-animation">
+        {% for event in events.items %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100 border-0 shadow hover-lift event-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        {% if event.is_featured %}
+                        <span class="badge bg-danger">Featured</span>
+                        {% endif %}
+                        <small class="text-muted">
+                            <i class="fas fa-calendar-alt me-1 text-danger"></i>
+                            {{ event.date.strftime('%B %d, %Y') }}
+                        </small>
+                    </div>
+                    <h5 class="card-title">{{ event.title }}</h5>
+                    <p class="card-text text-muted">{{ event.description[:150] }}{% if event.description|length > 150 %}...{% endif %}</p>
+                    
+                    <div class="mb-2">
+                        <small class="text-muted">
+                            <i class="fas fa-user me-1 text-danger"></i>
+                            <strong>Speaker:</strong> {{ event.speaker if event.speaker else 'TBA' }}
+                        </small>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <small class="text-muted">
+                            <i class="fas fa-map-marker-alt me-1 text-danger"></i>
+                            {{ event.location }}
+                        </small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <small class="text-muted">
+                            <i class="fas fa-clock me-1 text-danger"></i>
+                            {{ event.date.strftime('%I:%M %p') }}
+                        </small>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <div class="d-flex gap-2">
+                        <a href="{{ url_for('event_detail', event_id=event.id) }}" class="btn btn-outline-danger interactive-hover">
+                            Learn More
+                        </a>
+                        <a href="{{ url_for('register_event', event_id=event.id) }}" class="btn btn-danger interactive-hover">
+                            Register
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Pagination -->
+    {% if events.pages > 1 %}
+    <div class="d-flex justify-content-center mt-5">
+        <nav aria-label="Event pagination">
+            <ul class="pagination">
+                {% if events.has_prev %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('events', page=events.prev_num) }}">Previous</a>
+                </li>
+                {% endif %}
+                
+                {% for page_num in events.iter_pages() %}
+                    {% if page_num %}
+                        {% if page_num != events.page %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('events', page=page_num) }}">{{ page_num }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ page_num }}</span>
+                        </li>
+                        {% endif %}
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if events.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('events', page=events.next_num) }}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+    
+    {% else %}
+    <div class="text-center py-5 fade-in">
+        <i class="fas fa-calendar-times fa-3x text-muted mb-3 scale-in"></i>
+        <h3 class="text-muted fade-in fade-in-delay-1">No Events Available</h3>
+        <p class="text-muted fade-in fade-in-delay-2">Check back later for upcoming TEDx events.</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-danger interactive-hover fade-in fade-in-delay-3">
+            <i class="fas fa-envelope me-2"></i>Contact Us for Updates
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

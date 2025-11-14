@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}{{ event.title }} - TEDx NMIMS Indore{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Event Header -->
+            <div class="mb-4">
+                {% if event.is_featured %}
+                <span class="badge bg-danger mb-2">Featured Event</span>
+                {% endif %}
+                <h1 class="display-6 fw-bold">{{ event.title }}</h1>
+                
+                <div class="row text-muted mb-3">
+                    <div class="col-md-6">
+                        <p class="mb-1">
+                            <i class="fas fa-calendar-alt me-2"></i>
+                            {{ event.date.strftime('%A, %B %d, %Y') }}
+                        </p>
+                        <p class="mb-1">
+                            <i class="fas fa-clock me-2"></i>
+                            {{ event.date.strftime('%I:%M %p') }}
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            {{ event.location }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Event Description -->
+            <div class="mb-5">
+                <h3 class="h4 mb-3">About This Event</h3>
+                <p class="lead">{{ event.description }}</p>
+            </div>
+            
+            <!-- Speaker Information -->
+            {% if event.speaker %}
+            <div class="mb-5">
+                <h3 class="h4 mb-3">Speaker</h3>
+                <div class="card border-0 bg-light">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-3 text-center">
+                                <div class="speaker-avatar bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-user fa-2x"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <h5 class="card-title">{{ event.speaker }}</h5>
+                                {% if event.speaker_bio %}
+                                <p class="card-text">{{ event.speaker_bio }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Event Details -->
+            <div class="mb-5">
+                <h3 class="h4 mb-3">Event Details</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card border-0 bg-light h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-calendar-alt fa-2x text-danger mb-3"></i>
+                                <h6>Date & Time</h6>
+                                <p class="small text-muted">
+                                    {{ event.date.strftime('%B %d, %Y') }}<br>
+                                    {{ event.date.strftime('%I:%M %p') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0 bg-light h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-map-marker-alt fa-2x text-danger mb-3"></i>
+                                <h6>Location</h6>
+                                <p class="small text-muted">{{ event.location }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow sticky-top" style="top: 100px;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Register for this Event</h5>
+                    <p class="card-text text-muted">
+                        Don't miss this inspiring talk! Register now to secure your spot.
+                    </p>
+                    
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('register_event', event_id=event.id) }}" class="btn btn-danger btn-lg">
+                            <i class="fas fa-ticket-alt me-2"></i>Register Now
+                        </a>
+                        <a href="{{ url_for('events') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Events
+                        </a>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <h6 class="mb-3">Share This Event</h6>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="#" class="btn btn-outline-primary btn-sm">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-info btn-sm">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-success btn-sm">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="btn btn-outline-primary btn-sm">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

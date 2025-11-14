@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Register - {{ event.title }} - TEDx NMIMS Indore{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="h4 mb-0">
+                        <i class="fas fa-ticket-alt me-2"></i>Event Registration
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <!-- Event Summary -->
+                    <div class="alert alert-light border-0" role="alert">
+                        <h5 class="alert-heading">{{ event.title }}</h5>
+                        <p class="mb-2">
+                            <i class="fas fa-calendar-alt me-2"></i>
+                            {{ event.date.strftime('%A, %B %d, %Y at %I:%M %p') }}
+                        </p>
+                        <p class="mb-0">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            {{ event.location }}
+                        </p>
+                    </div>
+                    
+                    <!-- Registration Form -->
+                    <form method="POST" class="needs-validation" novalidate>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Full Name *</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                                <div class="invalid-feedback">
+                                    Please provide your full name.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid email address.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" name="phone">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="year" class="form-label">Year of Study</label>
+                                <select class="form-select" id="year" name="year">
+                                    <option value="">Select Year</option>
+                                    <option value="First Year">First Year</option>
+                                    <option value="Second Year">Second Year</option>
+                                    <option value="Third Year">Third Year</option>
+                                    <option value="Fourth Year">Fourth Year</option>
+                                    <option value="Graduate">Graduate</option>
+                                    <option value="Post Graduate">Post Graduate</option>
+                                    <option value="Faculty">Faculty</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="college" class="form-label">College/Institution</label>
+                            <input type="text" class="form-control" id="college" name="college" placeholder="e.g., NMIMS Indore">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    I agree to the <a href="#" class="text-danger">terms and conditions</a> and 
+                                    <a href="#" class="text-danger">privacy policy</a> *
+                                </label>
+                                <div class="invalid-feedback">
+                                    You must agree to the terms and conditions.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ url_for('event_detail', event_id=event.id) }}" class="btn btn-outline-secondary me-md-2">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Event
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-check me-2"></i>Complete Registration
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Registration Info -->
+            <div class="mt-4">
+                <div class="card border-0 bg-light">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <i class="fas fa-info-circle me-2"></i>Registration Information
+                        </h6>
+                        <ul class="list-unstyled small text-muted mb-0">
+                            <li>• Registration is free for all participants</li>
+                            <li>• You will receive a confirmation email after registration</li>
+                            <li>• Please arrive 15 minutes before the event starts</li>
+                            <li>• Bring a valid ID for verification</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Form validation
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();
+</script>
+{% endblock %}
